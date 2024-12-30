@@ -1,2 +1,2 @@
 # JS-Pixel-Test
-![](https://github.com/JS-Pixel-Test/preview.gif)
+<img src="https://github.com/cdk6546/JS-Pixel-Test/blob/main/preview.gif" width="500" height="300" />
