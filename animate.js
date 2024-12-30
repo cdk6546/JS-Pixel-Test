@@ -4,6 +4,19 @@ const canvas2D = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+class Circle{
+    constructor(targetX, targetY){
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.targetX = targetX;
+        this.targetY = targetY;
+        this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        this.velocityX = 0;
+        this.velocityY = 0;
+    }
+}
+
 const circles = [];
 const name = "nat !";
 const fontSize = 200;
@@ -50,18 +63,8 @@ function createCircles(){
 
     for(let i = 0; i < numCircles; i ++){
         const coordinate = pixelMap[Math.floor(Math.random() * pixelMap.length)]; // 0 to length of array
-        const size = Math.random() * 3 + 1; // 1 to 4
         
-        circles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: size,
-            targetX: coordinate.x,
-            targetY: coordinate.y,
-            color: `hsl(${Math.random() * 360}, 100%, 50%)`,
-            velocityX: 0,
-            velocityY: 0,
-        });
+        circles.push(new Circle(coordinate.x, coordinate.y))
     }
 }
 
