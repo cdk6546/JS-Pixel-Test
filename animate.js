@@ -8,17 +8,20 @@ class Circle{
     constructor(targetX, targetY){
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 1;
+        this.baseSize = Math.random() * 3 + 1;
+        this.size = this.baseSize;
         this.targetX = targetX;
         this.targetY = targetY;
         this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
         this.velocityX = 0;
         this.velocityY = 0;
+        this.bubbling = false;
+        this.time = Math.random() * 100;
     }
 }
 
 const circles = [];
-const name = "nat !";
+const name = "i love u";
 const fontSize = 200;
 const fontColor = "#FFD700";
 const numCircles = 700;
@@ -73,15 +76,29 @@ function updateCircles() {
     circles.forEach((circle) => {
         const dx = circle.targetX - circle.x;
         const dy = circle.targetY - circle.y;
+        const dxMag = dx * dx;
+        const dyMag = dy * dy;
+        const distance = Math.sqrt(dxMag + dyMag);
 
-        circle.velocityX += dx * 0.02; // attraction force, how fast it comes towards target
-        circle.velocityY += dy * 0.02;
+        if(!circle.bubbling){
+            circle.velocityX += dx * 0.02; // attraction force, how fast it comes towards target
+            circle.velocityY += dy * 0.02;
 
-        circle.velocityX *= 0.8; // reducing the velocity each frame, friction-like
-        circle.velocityY *= 0.8;
+            circle.velocityX *= 0.8; // reducing the velocity each frame, friction-like
+            circle.velocityY *= 0.8;
 
-        circle.x += circle.velocityX;
-        circle.y += circle.velocityY;
+            circle.x += circle.velocityX;
+            circle.y += circle.velocityY;
+        }
+        
+        else{
+            circle.time += 0.1;
+            circle.size = circle.baseSize + Math.sin(circle.time);
+        }
+
+        if(distance < 1){
+            circle.bubbling = true;
+        }
     });
 }
 
@@ -102,6 +119,7 @@ function animate(){
 
     requestAnimationFrame(animate);
 }
+
 
 createCircles();
 animate();
